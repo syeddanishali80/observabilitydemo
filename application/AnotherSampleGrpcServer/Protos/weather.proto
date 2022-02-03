@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option csharp_namespace = "AnotherSampleGrpcServer";
+
+package weather;
+
+// The weather service definition.
+service Weather {
+  // Get Weather
+  rpc GetWeather (WeatherRequest) returns (WeatherResponse);
+}
+
+message WeatherRequest {
+  RequestMeta Meta = 1;
+  double lat = 2;
+  double long = 3;
+  string city = 4;
+  string country = 5;
+}
+
+// The response message containing the weather data with meta.
+message WeatherResponse {
+  ResponseMeta Meta = 1;
+  int32 Temperature = 2;
+  string unit = 3;
+}
+
+message RequestMeta {
+  string token = 1;
+}
+
+message ResponseMeta {
+  bool success = 1;
+  int32 code = 2;
+  string message = 3;
+
+  Error Error = 4;
+}
+
+message Error {
+  string description = 1;
+  string detailed_description = 2;
+}
